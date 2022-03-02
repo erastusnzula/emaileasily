@@ -68,7 +68,7 @@ def store_data_copy():
             f"\nContent: {message['Body']}\nAttached Files: {filenames}\n\n")
 
 
-def send(sender_email, password, host="smtp.gmail.com", port=465):
+def email_send(sender_email, password, host="smtp.gmail.com", port=465):
     message['From'] = sender_email
     try:
         with smtplib.SMTP_SSL(host, port) as smtp:
@@ -80,7 +80,7 @@ def send(sender_email, password, host="smtp.gmail.com", port=465):
         print('Please ensure you have an internet connection.')
 
 
-def sent_emails():
+def emails_sent():
     with open('messages.txt', 'r') as f:
         file = f.read()
         return file
