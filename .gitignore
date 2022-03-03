@@ -1,3 +1,6 @@
 __pycache__
 .idea
 r.html
+build
+dist
+emaileasily.egg-info
