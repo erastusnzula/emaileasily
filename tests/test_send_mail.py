@@ -1,6 +1,6 @@
 import unittest
 
-from emaileasy import email_to, email_subject, email_cc, email_bcc
+from emaileasily import email_to, email_subject, email_cc, email_bcc
 
 
 class GetTestCase(unittest.TestCase):

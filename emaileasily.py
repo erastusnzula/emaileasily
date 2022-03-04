@@ -7,15 +7,18 @@ from email.message import EmailMessage
 from tkinter.filedialog import askopenfilenames
 
 import pandas
+from art import tprint
+
+tprint('EMAILEASILY')
 
 message = EmailMessage()
 filenames = []
 body = []
 
 
-def email_to(*args):
+def email_to(*receivers_addresses):
     recipients = []
-    for recipient in args:
+    for recipient in receivers_addresses:
         recipients.append(recipient)
     message['To'] = recipients
     return message['To']
@@ -27,12 +30,16 @@ def email_subject(subject=None):
 
 
 def email_attach_document():
-    documents = askopenfilenames(title='Select files to attach')
-    for document in documents:
-        with open(document, "rb") as file:
-            message.add_attachment(file.read(), maintype="application", subtype="octet-stream",
-                                   filename=os.path.basename(file.name))
-            filenames.append(os.path.basename(file.name))
+    try:
+        documents = askopenfilenames(title='Select files to attach')
+        for document in documents:
+            with open(document, "rb") as file:
+                message.add_attachment(file.read(), maintype="application", subtype="octet-stream",
+                                       filename=os.path.basename(file.name))
+                filenames.append(os.path.basename(file.name))
+                print(f'Document: {os.path.basename(file.name)} attached successfully.')
+    except TypeError:
+        print('Please call the function email_attach_document after email_content')
 
 
 def email_content(content=None):
@@ -45,17 +52,17 @@ def email_html(content=None):
     return message.set_content(content, subtype='html')
 
 
-def email_bcc(*args):
+def email_bcc(*bcc_addresses):
     recipients = []
-    for recipient in args:
+    for recipient in bcc_addresses:
         recipients.append(recipient)
     message['Bcc'] = recipients
     return message['Bcc']
 
 
-def email_cc(*args):
+def email_cc(*cc_addresses):
     recipients = []
-    for recipient in args:
+    for recipient in cc_addresses:
         recipients.append(recipient)
     message['Cc'] = recipients
     return message['Cc']
@@ -67,7 +74,7 @@ def email_copy_csv():
         columns = ['Date', 'To', 'Cc', 'Bcc', 'Subject', 'Content', 'Files']
         body_ = '.'.join([x[:50] for x in body])
         rows = [date_sent, message['To'], message['Cc'], message['Bcc'], message['Subject'],
-                body_, filenames]
+                body_ + '...', filenames]
         filename = 'emails.csv'
         new_file = not os.path.exists(filename)
         with open(filename, 'a') as f:
@@ -84,6 +91,7 @@ def email_send(sender_email, password, host="smtp.gmail.com", port=465):
     try:
         with smtplib.SMTP_SSL(host, port) as smtp:
             smtp.login(sender_email, password)
+            print('Sending email...')
             smtp.send_message(message)
             email_copy_csv()
             print(f'Email successfully sent.')
