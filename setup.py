@@ -6,7 +6,7 @@ path = pathlib.Path(__file__).parent
 README = (path / "README.md").read_text()
 setup(
     name='emaileasily',
-    version='0.0.5',
+    version='0.0.6',
     author='Erastus Nzula',
     author_email='nzulaerastus@gmail.com',
     description='A python email sender library',
@@ -23,7 +23,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     packages=find_packages(exclude=('tests',)),
-    install_requires=['pandas'],
+    install_requires=['pandas', 'art'],
     py_modules=['emaileasily'],
     include_package_data=True,
     python_requires='>=3.8',

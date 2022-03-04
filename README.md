@@ -71,13 +71,15 @@ View all sent emails
 
 # List all sent emails.
 # The emails can be viewed manually by opening the directory file emails.csv.
->>> emails_sent()
-                   Date                 To              Cc             Bcc         Subject                                                        Content          Files
-03-03-2022 Time: 21:30 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
-03-03-2022 Time: 21:30 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
-03-03-2022 Time: 21:30 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
-03-03-2022 Time: 21:31 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
-03-03-2022 Time: 21:31 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
+>>> emails_sent() 
+
+                  Date                 To              Cc             Bcc           Subject                                            Content                 Files
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...          ['blog.JPG']
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th... ['assignment 1.docx']
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
+04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
 
 ```
 
@@ -87,8 +89,8 @@ View the last sent email
 >>> from emaileasily import get_last_sent_email
 >>> get_last_sent_email()
 
-                  Date                 To              Cc             Bcc         Subject                                                        Content          Files
-03-03-2022 Time: 21:32 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Python Articles \r\nHello,\r\n\r\nPython articles contribute largely to my ... ['cover.docx']
+                  Date                 To              Cc             Bcc           Subject                                            Content Files
+04-03-2022 Time: 17:59 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...    []
 
 ```
 
@@ -97,4 +99,33 @@ View the last five sent emails
 ```pycon
 >>> from emaileasily import get_last_five_sent_emails
 >>> get_last_five_sent_emails()
+```
+Read Inbox Emails
+-----------------
+```pycon
+>>> from emaileasily import read_inbox_emails
+>>> read_inbox_emails(email_address, email_password, number_of_emails_to read)
+
+ _____  __  __     _     ___  _      _____     _     ____   ___  _     __   __
+| ____||  \/  |   / \   |_ _|| |    | ____|   / \   / ___| |_ _|| |    \ \ / /
+|  _|  | |\/| |  / _ \   | | | |    |  _|    / _ \  \___ \  | | | |     \ V / 
+| |___ | |  | | / ___ \  | | | |___ | |___  / ___ \  ___) | | | | |___   | |  
+|_____||_|  |_|/_/   \_\|___||_____||_____|/_/   \_\|____/ |___||_____|  |_|  
+                                                                              
+
+Subject:  Read Inbox Emails
+From:  nzulaerastus@gmail.com
+
+Hello,
+
+You can simply read inbox emails using the emaileasily function read_inbox_emails and pass the arguments
+email address, password and the number of emails to read.
+
+Kind regards,
+Erastus Nzula.
+    
+    
+
+______________________________________________________________________________________________________________________________________________________
+
 ```
