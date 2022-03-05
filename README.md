@@ -64,68 +64,41 @@ Attach Documents
 >>> email_attach_document()
 ```
 
-View all sent emails
--------------------
-```pycon
->>> from emaileasily import emails_sent
-
-# List all sent emails.
-# The emails can be viewed manually by opening the directory file emails.csv.
->>> emails_sent() 
-
-                  Date                 To              Cc             Bcc           Subject                                            Content                 Files
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...          ['blog.JPG']
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th... ['assignment 1.docx']
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
-04-03-2022 Time: 17:58 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...                    []
-
-```
-
-View the last sent email
-------------------------
-```pycon
->>> from emaileasily import get_last_sent_email
->>> get_last_sent_email()
-
-                  Date                 To              Cc             Bcc           Subject                                            Content Files
-04-03-2022 Time: 17:59 receiver@gmail.com ccopy@gmail.com bcopy@gmail.com Read Inbox Emails Hello,You can simply read inbox emails using th...    []
-
-```
-
-View the last five sent emails
-------------------------------
-```pycon
->>> from emaileasily import get_last_five_sent_emails
->>> get_last_five_sent_emails()
-```
-Read Inbox Emails
+Read Emails
 -----------------
 ```pycon
->>> from emaileasily import read_inbox_emails
->>> read_inbox_emails(email_address, email_password, number_of_emails_to read)
+>>> from emaileasily import read_emails
+"""
+Required arguments:
+    - email_address and password.
+Optional arguments in order:
+    -number of emails to read
+        Default: 2
+    -label
+        Default: "INBOX"
+    -host
+        Default: 'imap.gmail.com'
+    -port
+        Default: 993
+Change the default values according to preference and email account.
+If the email has attachment it will be successfully saved in directory.
+"""
 
- _____  __  __     _     ___  _      _____     _     ____   ___  _     __   __
-| ____||  \/  |   / \   |_ _|| |    | ____|   / \   / ___| |_ _|| |    \ \ / /
-|  _|  | |\/| |  / _ \   | | | |    |  _|    / _ \  \___ \  | | | |     \ V / 
-| |___ | |  | | / ___ \  | | | |___ | |___  / ___ \  ___) | | | | |___   | |  
-|_____||_|  |_|/_/   \_\|___||_____||_____|/_/   \_\|____/ |___||_____|  |_|  
-                                                                              
+# Read top inbox email
+>>> read_emails(email_address, email_password, 1)
 
+====================================================================================================
 Subject:  Read Inbox Emails
 From:  nzulaerastus@gmail.com
 
 Hello,
 
-You can simply read inbox emails using the emaileasily function read_inbox_emails and pass the arguments
-email address, password and the number of emails to read.
+You can simply read emails using emaileasily's read_emails function and pass the arguments
+email address, password, the number of emails to read, label, host, port.
 
 Kind regards,
 Erastus Nzula.
-    
-    
 
-______________________________________________________________________________________________________________________________________________________
+
 
 ```
