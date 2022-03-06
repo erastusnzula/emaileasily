@@ -99,6 +99,6 @@ email address, password, the number of emails to read, label, host, port.
 Kind regards,
 Erastus Nzula.
 
-
-
+# To read sent emails replace the default label with '"[Gmail]/Sent Mail"'
+>>> read_emails(email_address,email_password, number_of_emails, label='"[Gmail]/Sent Mail"')
 ```

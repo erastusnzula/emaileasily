@@ -85,7 +85,7 @@ def name_folder(subject_email):
     return "".join(c if c.isalnum() else "_" for c in subject_email)
 
 
-def read_emails(email_address, email_password, number_of_emails=2, label='INBOX', host='imap.gmail.com',
+def read_emails(email_address, email_password, number_of_emails=3, label='INBOX', host='imap.gmail.com',
                 port=993):
     global subject
     imap = imaplib.IMAP4_SSL(host, port)
@@ -120,9 +120,13 @@ def get_subject_and_from(msg):
     sender, encoding = decode_header(msg.get("From"))[0]
     if isinstance(sender, bytes):
         sender = sender.decode(encoding)
+    date, encoding = decode_header(msg.get("Date"))[0]
+    if isinstance(date, bytes):
+        date = date.decode(encoding)
     print('==' * 50)
     print("Subject: ", subject)
     print("From: ", sender)
+    print("Date: ", date)
 
 
 def get_multipart_email(msg):
@@ -137,7 +141,7 @@ def get_multipart_email(msg):
             pass
         if content_type == "text/plain" and "attachment" not in content_disposition:
             print(e_body)
-        elif "attachment" in content_disposition and content_type == "text/plain":
+        elif "attachment" in content_disposition:
             filename = part.get_filename()
             if filename:
                 folder_name = name_folder(subject)
@@ -145,15 +149,6 @@ def get_multipart_email(msg):
                     os.mkdir(folder_name)
                 file_path = os.path.join(folder_name, filename)
                 open(file_path, "wb").write(part.get_payload(decode=True))
-        else:
-            filename = part.get_filename()
-            if filename:
-                folder_name = name_folder(subject)
-                if not os.path.isdir(folder_name):
-                    os.mkdir(folder_name)
-                file_path = os.path.join(folder_name, filename)
-                open(file_path, "wb").write(part.get_payload(decode=True))
-                # webbrowser.open(file_path)
 
 
 def get_non_multipart_emails(msg):
@@ -165,7 +160,8 @@ def get_non_multipart_emails(msg):
         folder_name = name_folder(subject)
         if not os.path.isdir(folder_name):
             os.mkdir(folder_name)
-        filename = 'email_html_content.html'
+        filename = subject + '.html'
         file_path = os.path.join(folder_name, filename)
         open(file_path, "w").write(e_body)
+        print(e_body)
         webbrowser.open(file_path)

@@ -6,7 +6,7 @@ path = pathlib.Path(__file__).parent
 README = (path / "README.md").read_text()
 setup(
     name='emaileasily',
-    version='0.0.7',
+    version='0.0.8',
     author='Erastus Nzula',
     author_email='nzulaerastus@gmail.com',
     description='A python email sender library',
