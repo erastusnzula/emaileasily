@@ -8,9 +8,6 @@ from email.header import decode_header
 from email.message import EmailMessage
 from tkinter.filedialog import askopenfilenames
 
-from art import tprint
-
-tprint('EMAILEASILY', font='medium')
 message = EmailMessage()
 filenames = []
 body = []
@@ -85,7 +82,7 @@ def name_folder(subject_email):
     return "".join(c if c.isalnum() else "_" for c in subject_email)
 
 
-def read_emails(email_address, email_password, number_of_emails=3, label='INBOX', host='imap.gmail.com',
+def read_emails(email_address, email_password, number_of_emails=2, label='INBOX', host='imap.gmail.com',
                 port=993):
     global subject
     imap = imaplib.IMAP4_SSL(host, port)
@@ -105,6 +102,10 @@ def read_emails(email_address, email_password, number_of_emails=3, label='INBOX'
                 else:
                     get_non_multipart_emails(msg)
 
+    close_imap(imap)
+
+
+def close_imap(imap):
     imap.close()
     imap.logout()
 
@@ -142,13 +143,18 @@ def get_multipart_email(msg):
         if content_type == "text/plain" and "attachment" not in content_disposition:
             print(e_body)
         elif "attachment" in content_disposition:
-            filename = part.get_filename()
-            if filename:
-                folder_name = name_folder(subject)
-                if not os.path.isdir(folder_name):
-                    os.mkdir(folder_name)
-                file_path = os.path.join(folder_name, filename)
-                open(file_path, "wb").write(part.get_payload(decode=True))
+            get_attachments(part)
+
+
+def get_attachments(part):
+    filename = part.get_filename()
+    if filename:
+        folder_name = name_folder(subject)
+        if not os.path.isdir(folder_name):
+            os.mkdir(folder_name)
+        file_path = os.path.join(folder_name, filename)
+        open(file_path, "wb").write(part.get_payload(decode=True))
+        print('Attached files saved at: ' + file_path)
 
 
 def get_non_multipart_emails(msg):
@@ -157,11 +163,15 @@ def get_non_multipart_emails(msg):
     if content_type == 'text/plain':
         print(e_body)
     if content_type == "text/html":
-        folder_name = name_folder(subject)
-        if not os.path.isdir(folder_name):
-            os.mkdir(folder_name)
-        filename = subject + '.html'
-        file_path = os.path.join(folder_name, filename)
-        open(file_path, "w").write(e_body)
-        print(e_body)
-        webbrowser.open(file_path)
+        get_html_emails(e_body)
+
+
+def get_html_emails(e_body):
+    folder_name = name_folder(subject)
+    if not os.path.isdir(folder_name):
+        os.mkdir(folder_name)
+    filename = subject + '.html'
+    file_path = os.path.join(folder_name, filename)
+    open(file_path, "w").write(e_body)
+    print(e_body)
+    webbrowser.open(file_path)

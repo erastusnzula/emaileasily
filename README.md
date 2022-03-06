@@ -8,8 +8,9 @@ pip install emaileasily
 
 Usage
 =====
+
 ```pycon
->>> from emaileasily import email_to, email_subject, email_content, email_send
+>>> from emaileasily.emaileasily import email_to, email_subject, email_content, email_send
 
 # Accepts more than one email address eg email_to('example.gmail.com', 'example5@gmail.com').
 >>> email_to('example.gmail.com')
@@ -25,8 +26,9 @@ Email successfully sent.
 ```
 Add email bcc and cc
 ----------------
+
 ```pycon
->>> from emaileasily import email_bcc, email_cc
+>>> from emaileasily.emaileasily import email_bcc, email_cc
 
 # Accepts more than one email address.
 >>> email_bcc('example2@gmail.com')
@@ -35,8 +37,9 @@ Add email bcc and cc
 
 Send html email
 -------------------------
+
 ```pycon
->>> from emaileasily import email_html
+>>> from emaileasily.emaileasily import email_html
 >>> email_html(
     """
     <!DOCTYPE html>
@@ -56,8 +59,9 @@ Send html email
 
 Attach Documents
 ------------------
+
 ```pycon
->>> from emaileasily import email_attach_document
+>>> from emaileasily.emaileasily import email_attach_document
 
 # Call the function after email_content
 # The functions gives you the option to select documents for attachment.
@@ -66,8 +70,9 @@ Attach Documents
 
 Read Emails
 -----------------
+
 ```pycon
->>> from emaileasily import read_emails
+>>> from emaileasily.emaileasily import read_emails
 """
 Required arguments:
     - email_address and password.
@@ -88,8 +93,8 @@ If the email has attachment it will be successfully saved in directory.
 >>> read_emails(email_address, email_password, 1)
 
 ====================================================================================================
-Subject:  Read Inbox Emails
-From:  nzulaerastus@gmail.com
+Subject:  Read Emails
+From:  sender@gmail.com
 
 Hello,
 
@@ -99,6 +104,10 @@ email address, password, the number of emails to read, label, host, port.
 Kind regards,
 Erastus Nzula.
 
-# To read sent emails replace the default label with '"[Gmail]/Sent Mail"'
+```
+Read sent emails by replacing the default label with `label='"[Gmail]/Sent Mail"'`
+```pycon
 >>> read_emails(email_address,email_password, number_of_emails, label='"[Gmail]/Sent Mail"')
 ```
+
+
