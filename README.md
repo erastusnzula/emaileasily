@@ -1,10 +1,16 @@
-Emaileasily is a python package that simplifies the process of sending emails.
+Emaileasily is a python package that simplifies the process of sending and reading emails.
 
 Installation
 ------------
 ```
 pip install emaileasily
 ```
+Modify your email settings:
+ - Go to Manage google account -> Security -> Apps passwords ->select app
+ - Choose other (Custom name) and enter a name of your choice then click generate.
+ - Use the generated password to send and read emails using emaileasily.
+
+If you don't have two step verification just enable allow less secure apps and use your usual password.
 
 Usage
 =====

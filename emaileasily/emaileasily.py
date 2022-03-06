@@ -1,3 +1,10 @@
+"""
+Author: Erastus Nzula.
+Licence: MIT.
+Description: A simplified way to send and read emails.
+Contribution status: open.
+"""
+
 import email
 import imaplib
 import os
@@ -15,35 +22,63 @@ global subject
 
 
 def email_to(*receivers_addresses):
-    recipients = []
-    for recipient in receivers_addresses:
-        recipients.append(recipient)
-    message['To'] = recipients
-    return message['To']
+    """
+    :param receivers_addresses: The email main receivers' addresses.
+    :return: email receivers' addresses.
+    """
+    to_recipients = []
+    header = 'To'
+    return loop_through_addresses(receivers_addresses, to_recipients, header)
 
 
 def email_subject(subject_=None):
+    """
+    :param subject_: the email subject.
+    :return: email subject.
+    """
     message['Subject'] = subject_
     return message['Subject']
 
 
 def email_bcc(*bcc_addresses):
-    recipients = []
-    for recipient in bcc_addresses:
-        recipients.append(recipient)
-    message['Bcc'] = recipients
-    return message['Bcc']
+    """
+    :param bcc_addresses: email bcc receivers' addresses.
+    :return: bcc receivers' addresses.
+    """
+    bcc_recipients = []
+    header = 'Bcc'
+    return loop_through_addresses(bcc_addresses, bcc_recipients, header)
 
 
 def email_cc(*cc_addresses):
-    recipients = []
-    for recipient in cc_addresses:
+    """
+    :param cc_addresses: the email copy receivers' addresses
+    :return: email address
+    """
+    cc_recipients = []
+    header = 'Cc'
+    return loop_through_addresses(cc_addresses, cc_recipients, header)
+
+
+def loop_through_addresses(addresses, recipients, header):
+    """
+    Loop through all addresses.
+    :param addresses: user address input.
+    :param recipients: list to store all addresses.
+    :param header: message label (To, Bcc or Cc)
+    :return: email addresses.
+    """
+    for recipient in addresses:
         recipients.append(recipient)
-    message['Cc'] = recipients
-    return message['Cc']
+    message[header] = recipients
+    return message[header]
 
 
 def email_attach_document():
+    """
+    Allows attachment of files from directory.
+    :return: files to attach.
+    """
     try:
         documents = askopenfilenames(title='Select files to attach')
         for document in documents:
@@ -57,16 +92,34 @@ def email_attach_document():
 
 
 def email_content(content=None):
+    """
+    Accepts plain email content.
+    :param content: user plain content input.
+    :return: email body.
+    """
     body.append(content)
     return message.set_content(content)
 
 
 def email_html(content=None):
+    """
+    Accepts html content input.
+    :param content: html content.
+    :return:email body in html format.
+    """
     body.append(content)
     return message.set_content(f"""{content}""", subtype='html')
 
 
 def email_send(sender_email, password, host="smtp.gmail.com", port=465):
+    """
+    Logs in users and sends emails.
+    :param sender_email: sender email address.
+    :param password: sender password.
+    :param host: email provider host address.
+    :param port: email provider port.
+    :return: email send status.
+    """
     message['From'] = sender_email
     try:
         with smtplib.SMTP_SSL(host, port) as smtp:
@@ -79,11 +132,26 @@ def email_send(sender_email, password, host="smtp.gmail.com", port=465):
 
 
 def name_folder(subject_email):
+    """
+    Returns the snake case naming convention for emails' attachment folders and filenames.
+    :param subject_email: email subject.
+    :return: folder name
+    """
     return "".join(c if c.isalnum() else "_" for c in subject_email)
 
 
 def read_emails(email_address, email_password, number_of_emails=2, label='INBOX', host='imap.gmail.com',
                 port=993):
+    """
+    Fetches emails and returns its content.
+    :param email_address: sender email address.
+    :param email_password: sender email password
+    :param number_of_emails: the number of emails to view.
+    :param label: the label to fetch emails from.
+    :param host: the email provider host address.
+    :param port: the email provider port
+    :return: fetched emails.
+    """
     global subject
     imap = imaplib.IMAP4_SSL(host, port)
     imap.login(email_address, email_password)
@@ -106,11 +174,22 @@ def read_emails(email_address, email_password, number_of_emails=2, label='INBOX'
 
 
 def close_imap(imap):
+    """
+    Closes the imaplib connection and logs out the user.
+    :param imap: The imaplib connection.
+    :return: 0
+    """
     imap.close()
     imap.logout()
 
 
 def get_subject_and_from(msg):
+    """
+    Gets the email subject, date and sender.
+    Convert them to human readable form.
+    :param msg: email content
+    :return: email subject, sender and date.
+    """
     global subject
     subject, encoding = decode_header(msg['Subject'])[0]
     if isinstance(subject, bytes):
@@ -131,22 +210,36 @@ def get_subject_and_from(msg):
 
 
 def get_multipart_email(msg):
+    """
+    Classifies multipart emails based on content type.
+    Prints the body of emails without attachments.
+    For emails with attachments it returns the get_attachments function.
+    :param msg: email content.
+    :return: email_body.
+    """
     global subject
     for part in msg.walk():
         content_type = part.get_content_type()
         content_disposition = str(part.get("Content-Disposition"))
-        e_body = None
+        email_body = None
         try:
-            e_body = part.get_payload(decode=True).decode()
+            email_body = part.get_payload(decode=True).decode()
         except (AttributeError, UnicodeDecodeError):
             pass
         if content_type == "text/plain" and "attachment" not in content_disposition:
-            print(e_body)
+            print(email_body)
         elif "attachment" in content_disposition:
             get_attachments(part)
 
 
 def get_attachments(part):
+    """
+    Gets the attached files in a email.
+    Creates a folder based on email subject.
+    Stores the attached in the folder.
+    :param part: The email attachment part
+    :return: email attached files.
+    """
     filename = part.get_filename()
     if filename:
         folder_name = name_folder(subject)
@@ -158,20 +251,34 @@ def get_attachments(part):
 
 
 def get_non_multipart_emails(msg):
+    """
+    Fetches emails without attachments.
+    If email content type is text/plain it prints out the email content(email body).
+    If email content type is text/html it returns the get_html_emails function.
+    :param msg: email message type
+    :return: email_body
+    """
     content_type = msg.get_content_type()
-    e_body = msg.get_payload(decode=True).decode()
+    email_body = msg.get_payload(decode=True).decode()
     if content_type == 'text/plain':
-        print(e_body)
+        print(email_body)
     if content_type == "text/html":
-        get_html_emails(e_body)
+        get_html_emails(email_body)
 
 
-def get_html_emails(e_body):
+def get_html_emails(email_body):
+    """
+    Creates a folder with name based on the email subject.
+    Creates a html file inside the folder.
+    Writes the email content in the file and opens it in a web browser.
+    :param email_body: fetched email body.
+    :return: email_body.
+    """
     folder_name = name_folder(subject)
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
     filename = subject + '.html'
     file_path = os.path.join(folder_name, filename)
-    open(file_path, "w").write(e_body)
-    print(e_body)
+    open(file_path, "w").write(email_body)
+    print(email_body)
     webbrowser.open(file_path)
