@@ -127,6 +127,7 @@ def email_send(sender_email, password, host="smtp.gmail.com", port=465):
             print('Sending email...')
             smtp.send_message(message)
             print(f'Email successfully sent.')
+            smtp.close()
     except socket.gaierror:
         print('Please ensure you have an internet connection.')
 
