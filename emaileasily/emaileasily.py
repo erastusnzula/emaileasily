@@ -42,7 +42,7 @@ def email_subject(subject_=None):
     except ValueError:
         for key in message.keys():
             del message[key]
-            print('Re-enter email subject.')
+        print('Re-enter email subject.')
 
 
 def email_bcc(*bcc_addresses):
@@ -81,7 +81,7 @@ def loop_through_addresses(addresses, recipients, header):
     except ValueError:
         for key in message.keys():
             del message[key]
-            print('Re-enter email address.')
+        print('Re-enter email address.')
 
 
 def email_attach_document():
