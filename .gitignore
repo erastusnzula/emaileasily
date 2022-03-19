@@ -5,3 +5,4 @@ dist
 emaileasily.egg-info
 emails.csv
 emaileasily.spec
+password.py

@@ -68,10 +68,15 @@ def loop_through_addresses(addresses, recipients, header):
     :param header: message label (To, Bcc or Cc)
     :return: email addresses.
     """
-    for recipient in addresses:
-        recipients.append(recipient)
-    message[header] = recipients
-    return message[header]
+    try:
+        for recipient in addresses:
+            recipients.append(recipient)
+        message[header] = recipients
+        return message[header]
+    except ValueError:
+        for key in message.keys():
+            del message[key]
+            print('Re-enter address again.')
 
 
 def email_attach_document():
@@ -127,9 +132,14 @@ def email_send(sender_email, password, host="smtp.gmail.com", port=465):
             print('Sending email...')
             smtp.send_message(message)
             print(f'Email successfully sent.')
-            smtp.close()
-    except socket.gaierror:
-        print('Please ensure you have an internet connection.')
+            smtp.quit()
+            for key in message.keys():
+                del message[key]
+
+    except (smtplib.SMTPRecipientsRefused, socket.gaierror):
+        for key in message.keys():
+            del message[key]
+        print('Failed to send email.')
 
 
 def name_folder(subject_email):
