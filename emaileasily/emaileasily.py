@@ -36,8 +36,13 @@ def email_subject(subject_=None):
     :param subject_: the email subject.
     :return: email subject.
     """
-    message['Subject'] = subject_
-    return message['Subject']
+    try:
+        message['Subject'] = subject_
+        return message['Subject']
+    except ValueError:
+        for key in message.keys():
+            del message[key]
+            print('Re-enter email subject.')
 
 
 def email_bcc(*bcc_addresses):
@@ -76,7 +81,7 @@ def loop_through_addresses(addresses, recipients, header):
     except ValueError:
         for key in message.keys():
             del message[key]
-            print('Re-enter address again.')
+            print('Re-enter email address.')
 
 
 def email_attach_document():

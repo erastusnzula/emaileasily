@@ -16,4 +16,4 @@ from .emaileasily import get_html_emails
 from .emaileasily import close_imap
 from .emaileasily import loop_through_addresses
 
-__version__ = '0.1.4'
+__version__ = '0.1.6'
