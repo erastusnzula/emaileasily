@@ -290,11 +290,14 @@ def get_html_emails(email_body):
     :param email_body: fetched email body.
     :return: email_body.
     """
-    folder_name = name_folder(subject)
-    if not os.path.isdir(folder_name):
-        os.mkdir(folder_name)
-    filename = subject + '.html'
-    file_path = os.path.join(folder_name, filename)
-    open(file_path, "w").write(email_body)
-    print(email_body)
-    webbrowser.open(file_path)
+    try:
+        folder_name = name_folder(subject)
+        if not os.path.isdir(folder_name):
+            os.mkdir(folder_name)
+        filename = subject + '.html'
+        file_path = os.path.join(folder_name, filename)
+        open(file_path, "w").write(email_body)
+        print(email_body)
+        webbrowser.open(file_path)
+    except UnicodeEncodeError:
+        pass
