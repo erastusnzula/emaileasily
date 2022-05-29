@@ -3,11 +3,11 @@ Emaileasily is a python package that simplifies the process of sending and readi
 Content
 -------
 1. [Installation](#Installation)
-2. [Send Email](#Send Email)
-3. [Send an email with bcc and cc](#Send an email with bcc and cc)
-4. [Send an email with attached document](#Send an email with attached document)
-5. [Send html email](#Send html email)
-6. [Read Emails](#Read Emails)
+2. [Send Email](#Send-Email)
+3. [Send an email with bcc and cc](#Send-an-email-with-bcc-and-cc)
+4. [Send an email with attached document](#Send-an-email-with-attached-document)
+5. [Send html email](#Send-html-email)
+6. [Read Emails](#Read-Emails)
 
 Installation
 ------------
