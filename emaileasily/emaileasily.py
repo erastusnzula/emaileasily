@@ -16,7 +16,7 @@ from email.message import EmailMessage
 from tkinter.filedialog import askopenfilenames
 
 message = EmailMessage()
-filenames = []
+# filenames = []
 body = []
 global subject
 
@@ -95,7 +95,7 @@ def email_attach_document():
             with open(document, "rb") as file:
                 message.add_attachment(file.read(), maintype="application", subtype="octet-stream",
                                        filename=os.path.basename(file.name))
-                filenames.append(os.path.basename(file.name))
+                # filenames.append(os.path.basename(file.name))
                 print(f'Document: {os.path.basename(file.name)} attached successfully.')
     except TypeError:
         print('Please call the function email_attach_document after email_content')
@@ -202,7 +202,7 @@ def close_imap(imap):
 def get_subject_and_from(msg):
     """
     Gets the email subject, date and sender.
-    Convert them to human readable form.
+    Convert them to human-readable form.
     :param msg: email content
     :return: email subject, sender and date.
     """
@@ -230,7 +230,7 @@ def get_multipart_email(msg):
     Classifies multipart emails based on content type.
     Prints the body of emails without attachments.
     For emails with attachments it returns the get_attachments function.
-    :param msg: email content.
+    param msg: email content.
     :return: email_body.
     """
     global subject

@@ -1,5 +1,14 @@
 Emaileasily is a python package that simplifies the process of sending and reading emails.
 
+Content
+-------
+1. [Installation](#Installation)
+2. [Send Email](#Send Email)
+3. [Send an email with bcc and cc](#Send an email with bcc and cc)
+4. [Send an email with attached document](#Send an email with attached document)
+5. [Send html email](#Send html email)
+6. [Read Emails](#Read Emails)
+
 Installation
 ------------
 ```
@@ -12,11 +21,11 @@ Modify your email settings:
 
 If you don't have two step verification just enable allow less secure apps and use your usual password.
 
-Usage
-=====
+Send Email
+=========
 
 ```pycon
->>> from emaileasily.emaileasily import email_to, email_subject, email_content, email_send
+>>> from emaileasily import email_to, email_subject, email_content, email_send
 
 # Accepts more than one email address eg email_to('example.gmail.com', 'example5@gmail.com').
 >>> email_to('example.gmail.com')
@@ -30,22 +39,53 @@ Usage
 >>> email_send('sender@gmail.com', 'password')
 Email successfully sent.
 ```
-Add email bcc and cc
+Send an email with bcc and cc
 ----------------
 
 ```pycon
->>> from emaileasily.emaileasily import email_bcc, email_cc
+>>> from emaileasily import email_to, email_subject, email_content, email_send, email_bcc, email_cc
 
 # Accepts more than one email address.
+>>> email_to('example.gmail.com')
+'example.gmail.com'
 >>> email_bcc('example2@gmail.com')
 >>> email_cc('example3@gmail.com')
+>>> email_subject('Python Email')
+'Python Email'
+>>> email_content('This is an example of sending emails with emaileasily')
+# email_send() takes sender address and password as key arguments.
+# The functions also takes email host and port as optional arguments.
+# Default host="smtp.gmail.com" and port=465
+>>> email_send('sender@gmail.com', 'password')
+Email successfully sent.
+```
+
+Send an email with attached document
+------------------
+
+```pycon
+>>> from emaileasily import email_to, email_subject, email_content, email_send,email_attach_document
+>>> email_to('example.gmail.com')
+'example.gmail.com'
+>>> email_subject('Python Email')
+'Python Email'
+>>> email_content('This is an example of sending emails with emaileasily')
+# Always call the function after email_content
+# The functions gives you the option to select documents for attachment.
+>>> email_attach_document()
+# email_send() takes sender address and password as key arguments.
+# The functions also takes email host and port as optional arguments.
+# Default host="smtp.gmail.com" and port=465
+>>> email_send('sender@gmail.com', 'password')
+Email successfully sent.
+
 ```
 
 Send html email
 -------------------------
 
 ```pycon
->>> from emaileasily.emaileasily import email_html
+>>> from emaileasily import email_html
 >>> email_html(
     """
     <!DOCTYPE html>
@@ -63,22 +103,12 @@ Send html email
     )
 ```
 
-Attach Documents
-------------------
-
-```pycon
->>> from emaileasily.emaileasily import email_attach_document
-
-# Call the function after email_content
-# The functions gives you the option to select documents for attachment.
->>> email_attach_document()
-```
 
 Read Emails
 -----------------
 
 ```pycon
->>> from emaileasily.emaileasily import read_emails
+>>> from emaileasily import read_emails
 """
 Required arguments:
     - email_address and password.
@@ -104,7 +134,7 @@ From:  sender@gmail.com
 
 Hello,
 
-You can simply read emails using emaileasily's read_emails function and pass the arguments
+You can simply read emails using emaileasily read_emails function and pass the arguments
 email address, password, the number of emails to read, label, host, port.
 
 Kind regards,
