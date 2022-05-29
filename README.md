@@ -19,10 +19,10 @@ Modify your email settings:
  - Choose other (Custom name) and enter a name of your choice then click generate.
  - Use the generated password to send and read emails using emaileasily.
 
-If you don't have two step verification just enable allow less secure apps and use your usual password.
+If you don't have two-step verification just enable allow less secure apps and use your usual password.
 
 Send Email
-=========
+----------
 
 ```pycon
 >>> from emaileasily import email_to, email_subject, email_content, email_send
